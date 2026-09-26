@@ -1,0 +1,72 @@
+body{
+    background: linear-gradient(rgb(213, 162, 68),yellow);
+    text-align: center;
+    font-family: "Happy Monkey", system-ui;
+    font-size: 24px;
+    color: orangered;
+    text-shadow: 0 0 2px black;
+}
+
+#header{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#age{
+    margin-bottom: 0;
+}
+
+#date{
+    margin-top: 5px;
+}
+
+
+#pfp{
+  width: 300px;
+  border-radius: 50px;
+  border: 9px solid orangered;
+}
+
+.img-set{
+    margin-top: 100px;
+}
+
+.imgs{
+    width: 400px;
+    height: 400px;
+    margin: 20px auto;
+    background-size: cover;
+    background-position: center; 
+    border: 5px solid white;
+    border-radius: 14px;
+    background-image: url("Images/vecteezy_ribbon-background-realistic-modern-design_1436671.jpg");
+}
+
+
+#job-img:hover{      
+    background-image: url("Images/job.gif");  
+}
+
+#gym-img:hover{      
+    background-image: url("Images/gym.gif");  
+}
+
+#hair-img:hover{      
+    background-image: url("Images/giphy.gif");
+    
+}
+
+#singer-img:hover{      
+    background-image: url("Images/singer.gif");
+    
+}
+
+
+#feet-img:hover{      
+    background-image: url("Images/feet.gif"); 
+
+}
+
+
+
