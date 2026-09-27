@@ -18,12 +18,12 @@ const cardConfigs = {
     "job-img": {
         textId: "job-text",
         defaultText: "What is his Job🤔",
-        activeText: "Marketing"
+        activeText: "Marketing🤑🪙"
     },
     "gym-img": {
         textId: "build-text",
         defaultText: "How is his Build",
-        activeText: "Mid"
+        activeText: "Mid💩💩"
     },
     "hair-img": {
         textId: "ginger-text",
@@ -33,7 +33,7 @@ const cardConfigs = {
     "singer-img": {
         textId: "singer-text",
         defaultText: "What's his Favorite Artist🎤",
-        activeText: "Drake"
+        activeText: "Drake🔞"
     },
     "feet-img": {
         textId: "feet-text",
