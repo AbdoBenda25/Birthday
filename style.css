@@ -1,72 +1,140 @@
-body{
-    background: linear-gradient(rgb(213, 162, 68),yellow);
-    text-align: center;
-    font-family: "Happy Monkey", system-ui;
-    font-size: 24px;
-    color: orangered;
-    text-shadow: 0 0 2px black;
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-#header{
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgb(213, 162, 68), #ffd700);
+    text-align: center;
+    font-family: "Happy Monkey", system-ui, -apple-system, sans-serif;
+    font-size: clamp(18px, 4vw, 24px);
+    color: orangered;
+    text-shadow: 0 0 2px black;
+    overflow-x: hidden;
+    padding: 24px 16px 80px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Hardware-accelerated background overlay for smooth GPU rendering */
+#bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    transform: translateZ(0);
+    will-change: opacity;
+}
+
+body.feet-active #bg-overlay {
+    opacity: 1;
+    background-image: url("Images/feet.gif");
+}
+
+#header {
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
-#age{
+h1 {
+    font-size: clamp(1.6rem, 5.5vw, 2.5rem);
+    margin-bottom: 16px;
+    line-height: 1.25;
+    padding: 0 10px;
+}
+
+#pfp {
+    width: clamp(200px, 68vw, 300px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50px;
+    border: clamp(6px, 1.8vw, 9px) solid orangered;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    margin-bottom: 12px;
+}
+
+#age {
+    font-size: clamp(1.3rem, 4.5vw, 1.8rem);
     margin-bottom: 0;
 }
 
-#date{
+#date {
+    font-size: clamp(1.1rem, 3.8vw, 1.4rem);
     margin-top: 5px;
 }
 
-
-#pfp{
-  width: 300px;
-  border-radius: 50px;
-  border: 9px solid orangered;
+.img-set {
+    margin-top: clamp(45px, 8vw, 85px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.img-set{
-    margin-top: 100px;
+.img-set h3 {
+    font-size: clamp(1.15rem, 4.2vw, 1.6rem);
+    margin-bottom: 12px;
+    padding: 0 12px;
+    max-width: 90vw;
 }
 
-.imgs{
-    width: 400px;
-    height: 400px;
-    margin: 20px auto;
+.imgs {
+    width: min(400px, 88vw);
+    aspect-ratio: 1 / 1;
+    height: auto;
+    margin: 12px auto;
     background-size: cover;
-    background-position: center; 
-    border: 5px solid white;
-    border-radius: 14px;
+    background-position: center;
+    border: clamp(4px, 1.2vw, 6px) solid white;
+    border-radius: 18px;
     background-image: url("Images/vecteezy_ribbon-background-realistic-modern-design_1436671.jpg");
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
+.imgs:hover,
+.imgs.revealed {
+    transform: scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
 
-#job-img:hover{      
+/* Revealed GIF styles for both Desktop hover and Mobile touch/revealed state */
+#job-img:hover,
+#job-img.revealed {      
     background-image: url("Images/job.gif");  
 }
 
-#gym-img:hover{      
+#gym-img:hover,
+#gym-img.revealed {      
     background-image: url("Images/gym.gif");  
 }
 
-#hair-img:hover{      
+#hair-img:hover,
+#hair-img.revealed {      
     background-image: url("Images/giphy.gif");
-    
 }
 
-#singer-img:hover{      
+#singer-img:hover,
+#singer-img.revealed {      
     background-image: url("Images/singer.gif");
-    
 }
 
-
-#feet-img:hover{      
+#feet-img:hover,
+#feet-img.revealed {      
     background-image: url("Images/feet.gif"); 
-
 }
-
-
-
