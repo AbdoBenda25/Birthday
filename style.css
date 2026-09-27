@@ -86,6 +86,11 @@ h1 {
     margin-bottom: 12px;
     padding: 0 12px;
     max-width: 90vw;
+    min-height: 2.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .imgs {

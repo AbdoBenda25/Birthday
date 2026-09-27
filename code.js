@@ -1,8 +1,4 @@
-const txt = document.getElementById("ginger-text");
-const defaultGingerText = "What Makes him Speical👌";
-const activeGingerText = "HE IS GINGEEER😭😭😭";
-
-// 1. Asset preloading to prevent lag/stutter on mobile networks
+// 1. Asset preloading for instant responsiveness
 const preloadAssets = [
     "Images/job.gif",
     "Images/gym.gif",
@@ -17,59 +13,112 @@ preloadAssets.forEach(src => {
     img.src = src;
 });
 
-// 2. Interaction state functions (desktop hover & script triggers)
-function change() {
-    if (txt) txt.innerText = activeGingerText;
+// 2. Configuration for each card's heading text and effects
+const cardConfigs = {
+    "job-img": {
+        textId: "job-text",
+        defaultText: "What is his Job🤔",
+        activeText: "Marketing"
+    },
+    "gym-img": {
+        textId: "build-text",
+        defaultText: "How is his Build",
+        activeText: "Mid"
+    },
+    "hair-img": {
+        textId: "ginger-text",
+        defaultText: "What Makes him Speical👌",
+        activeText: "HE IS GINGEEER😭😭😭"
+    },
+    "singer-img": {
+        textId: "singer-text",
+        defaultText: "What's his Favorite Artist🎤",
+        activeText: "Drake"
+    },
+    "feet-img": {
+        textId: "feet-text",
+        defaultText: "What does he want?",
+        activeText: "FEEEET🔥🔥🔥",
+        onActivate: () => document.body.classList.add("feet-active"),
+        onDeactivate: () => document.body.classList.remove("feet-active")
+    }
+};
+
+function revealCard(cardId) {
+    const config = cardConfigs[cardId];
+    if (!config) return;
+    const el = document.getElementById(config.textId);
+    if (el) el.innerText = config.activeText;
+    if (config.onActivate) config.onActivate();
 }
 
-function def() {
-    if (txt) txt.innerText = defaultGingerText;
+function resetCard(cardId) {
+    const config = cardConfigs[cardId];
+    if (!config) return;
+    const el = document.getElementById(config.textId);
+    if (el) el.innerText = config.defaultText;
+    if (config.onDeactivate) config.onDeactivate();
 }
 
-function changeBack() {
-    document.body.classList.add("feet-active");
+function resetAllCards() {
+    Object.keys(cardConfigs).forEach(cardId => {
+        resetCard(cardId);
+        const box = document.getElementById(cardId);
+        if (box) box.classList.remove("revealed");
+    });
 }
 
-function preBack() {
-    document.body.classList.remove("feet-active");
-}
+// Backwards compatibility functions
+function change() { revealCard("hair-img"); }
+function def() { resetCard("hair-img"); }
+function changeBack() { revealCard("feet-img"); }
+function preBack() { resetCard("feet-img"); }
 
-// 3. Touch & click handling for flexible mobile + PC support
+// 3. Setup event listeners for hover (Desktop) and tap (Mobile)
 function initInteractions() {
-    const cards = document.querySelectorAll(".imgs");
+    Object.keys(cardConfigs).forEach(cardId => {
+        const box = document.getElementById(cardId);
+        if (!box) return;
 
-    cards.forEach(box => {
+        // Desktop mouse hover events
+        box.addEventListener("mouseenter", () => {
+            revealCard(cardId);
+        });
+
+        box.addEventListener("mouseleave", () => {
+            // Only reset if not tapped/pinned on mobile
+            if (!box.classList.contains("revealed")) {
+                resetCard(cardId);
+            }
+        });
+
+        // Mobile touch & click events
         box.addEventListener("click", (e) => {
             e.stopPropagation();
             const isCurrentlyRevealed = box.classList.contains("revealed");
 
-            // Close other revealed cards for clean single focus
-            cards.forEach(other => {
-                if (other !== box && other.classList.contains("revealed")) {
-                    other.classList.remove("revealed");
-                    if (other.id === "hair-img") def();
-                    if (other.id === "feet-img") preBack();
+            // Close other cards for a clean single reveal
+            Object.keys(cardConfigs).forEach(otherId => {
+                if (otherId !== cardId) {
+                    resetCard(otherId);
+                    const otherBox = document.getElementById(otherId);
+                    if (otherBox) otherBox.classList.remove("revealed");
                 }
             });
 
-            // Toggle current card
             if (isCurrentlyRevealed) {
                 box.classList.remove("revealed");
-                if (box.id === "hair-img") def();
-                if (box.id === "feet-img") preBack();
+                resetCard(cardId);
             } else {
                 box.classList.add("revealed");
-                if (box.id === "hair-img") change();
-                if (box.id === "feet-img") changeBack();
+                revealCard(cardId);
             }
         });
     });
 
-    // Tap outside to close any open cards on mobile
+    // Tap outside resets all cards on mobile
     document.addEventListener("click", () => {
-        cards.forEach(card => card.classList.remove("revealed"));
-        def();
-        preBack();
+        resetAllCards();
     });
 }
 
